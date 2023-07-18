@@ -1,9 +1,12 @@
 package com.personal.finance.manager.dao;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.personal.finance.manager.entities.Expanses;
 import com.personal.finance.manager.entities.PersonalFinance;
 import com.personal.finance.manager.service.PersonalFinanceService;
 
@@ -18,5 +21,9 @@ public class PersonalControllerDao {
 	
 	public PersonalFinance loginPersonal(String loginId,String password) {
 		return this.personalFinanceService.loginPersonal(loginId,password);
+	}
+	
+	public List<Expanses> getAllExpanses(){
+		return this.personalFinanceService.getAllExpanses();
 	}
 }

@@ -8,17 +8,13 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "personalfinance")
+@Table(name = "personal_finance")
 public class PersonalFinance {
 	@Id
 	private int pfId;
 	private String pfFirstName;
-	
-	@OneToOne(targetEntity = PersonalFinanceAddress.class,cascade = CascadeType.ALL)
-	@JoinColumn(name = "adrs_id")
-	private PersonalFinanceAddress pfAddress;
 	private String pfLastName;
-	private int pfMobileNo;
+	private String pfMobileNo;
 	private String pfEmail;
 	private String pfPassword;
 	
@@ -28,12 +24,11 @@ public class PersonalFinance {
 		// TODO Auto-generated constructor stub
 	}
 
-	public PersonalFinance(int pfId, String pfFirstName, PersonalFinanceAddress pfAddress, String pfLastName, int pfMobileNo,
+	public PersonalFinance(int pfId, String pfFirstName, String pfLastName, String pfMobileNo,
 			String pfEmail, String pfPassword) {
 		super();
 		this.pfId = pfId;
 		this.pfFirstName = pfFirstName;
-		this.pfAddress = pfAddress;
 		this.pfLastName = pfLastName;
 		this.pfMobileNo = pfMobileNo;
 		this.pfEmail = pfEmail;
@@ -42,8 +37,8 @@ public class PersonalFinance {
 
 	@Override
 	public String toString() {
-		return "PersonalFinance [pfId=" + pfId + ", pfFirstName=" + pfFirstName + ", pfAddress=" + pfAddress
-				+ ", pfLastName=" + pfLastName + ", pfMobileNo=" + pfMobileNo + ", pfEmail=" + pfEmail + ", pfPassword="
+		return "PersonalFinance [pfId=" + pfId + ", pfFirstName=" + pfFirstName + ","
+				+ " pfLastName=" + pfLastName + ", pfMobileNo=" + pfMobileNo + ", pfEmail=" + pfEmail + ", pfPassword="
 				+ pfPassword + "]";
 	}
 	
@@ -59,22 +54,17 @@ public class PersonalFinance {
 	public void setPfFirstName(String pfFirstName) {
 		this.pfFirstName = pfFirstName;
 	}
-	public PersonalFinanceAddress getPfAddress() {
-		return pfAddress;
-	}
-	public void setPfAddress(PersonalFinanceAddress pfAddress) {
-		this.pfAddress = pfAddress;
-	}
+	
 	public String getPfLastName() {
 		return pfLastName;
 	}
 	public void setPfLastName(String pfLastName) {
 		this.pfLastName = pfLastName;
 	}
-	public int getPfMobileNo() {
+	public String getPfMobileNo() {
 		return pfMobileNo;
 	}
-	public void setPfMobileNo(int pfMobileNo) {
+	public void setPfMobileNo(String pfMobileNo) {
 		this.pfMobileNo = pfMobileNo;
 	}
 	public String getPfEmail() {

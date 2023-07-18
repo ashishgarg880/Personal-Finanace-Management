@@ -1,14 +1,15 @@
 package com.personal.finance.manager;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.io.FileReader;
 import java.util.Scanner;
 
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.personal.finance.manager.dao.PersonalControllerDao;
 import com.personal.finance.manager.entities.PersonalFinance;
 
@@ -25,10 +26,10 @@ public class PersonalFinanceManagerApplication implements CommandLineRunner {
 	public String loginCheck(String str,String pass) {
 	PersonalFinance personalFinance = this.personalControllerDao.loginPersonal(str, pass);
 		if(personalFinance.getPfEmail() != null) {
-			return "Welcome "+ personalFinance.getPfFirstName() + personalFinance.getPfLastName()+ "\n\n"
-					+ "1. Show all ";
+			return "Welcome "+ personalFinance.getPfFirstName() + " " + personalFinance.getPfLastName()+ "\n\n"
+					+ "2. Show all ventures \n\n3. Add Ventures \n\n4. ";
 		}
-		return "Please valid Information \n\n Enter to continue \n\n2. Create the Personal Information";
+		return "Please valid Information \n\n0. to continue \n\n1. Create the Personal Information";
 	}
 	
 	@Override
@@ -40,27 +41,26 @@ public class PersonalFinanceManagerApplication implements CommandLineRunner {
 		System.out.println("Enter your password:");
 		String pass = scanner.nextLine();
 		System.out.println(loginCheck(str,pass));
-//		String st = scanner.next();
-		KeyListener keyListener = new KeyListener() {
-			
-			@Override
-			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
+		JSONParser jsonParser = new JSONParser();
+		FileReader fileReader = new FileReader("D:\\Java\\InfoTrixs\\Personal-Finanace-Management\\Personal-Finanace-Management\\src\\main\\resources\\personalDetail.json");
+		Object object = jsonParser.parse(fileReader);
+		ObjectMapper objectMapper = new ObjectMapper();
+		PersonalFinance personalFinance  = new PersonalFinance();
+		String t = scanner.next();
+		switch(t) {
+			case "0":
 				
-			}
-			
-			@Override
-			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void keyPressed(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-		};
+			case "1":
+				personalFinance = objectMapper.convertValue(object, PersonalFinance.class);
+				System.out.println(this.personalControllerDao.createModulePersonal(personalFinance));
+				break;
+			case "2":
+				System.out.println();
+			default:
+				System.out.println("you want to continue...");
+				SpringApplication.run(PersonalFinanceManagerApplication.class, args);
+				break;
+		}
+		scanner.close();
 	}
-
 }
